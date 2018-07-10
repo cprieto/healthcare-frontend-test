@@ -1,8 +1,8 @@
-package com.searchink.sample;
+package com.healthcare.sample;
 
-import com.searchink.sample.domain.Task;
-import com.searchink.sample.domain.TaskRepository;
-import com.searchink.sample.domain.TaskStatus;
+import com.healthcare.sample.domain.Task;
+import com.healthcare.sample.domain.TaskRepository;
+import com.healthcare.sample.domain.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

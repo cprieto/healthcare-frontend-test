@@ -1,4 +1,4 @@
-package com.searchink.sample.domain;
+package com.healthcare.sample.domain;
 
 public enum TaskStatus {
     WAITING,

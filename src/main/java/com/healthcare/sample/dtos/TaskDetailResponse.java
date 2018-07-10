@@ -1,4 +1,4 @@
-package com.searchink.sample.dtos;
+package com.healthcare.sample.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

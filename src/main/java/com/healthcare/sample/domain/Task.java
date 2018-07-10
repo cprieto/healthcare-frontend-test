@@ -1,4 +1,4 @@
-package com.searchink.sample.domain;
+package com.healthcare.sample.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

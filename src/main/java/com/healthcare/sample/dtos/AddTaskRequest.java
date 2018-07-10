@@ -1,4 +1,4 @@
-package com.searchink.sample.dtos;
+package com.healthcare.sample.dtos;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -8,15 +8,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class UpdateTaskDetailRequest {
+public class AddTaskRequest {
     @NotNull @NotEmpty
     public String title;
+
     public String description;
 
     @NotNull @Future
     public Date dueAt;
 
-    @NotNull
-    @Min(1) @Max(10)
+    @NotNull @Min(1) @Max(10)
     public int priority;
 }

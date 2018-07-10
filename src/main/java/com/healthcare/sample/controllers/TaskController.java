@@ -1,9 +1,11 @@
-package com.searchink.sample.controllers;
+package com.healthcare.sample.controllers;
 
-import com.searchink.sample.domain.Task;
-import com.searchink.sample.domain.TaskRepository;
-import com.searchink.sample.domain.TaskStatus;
-import com.searchink.sample.dtos.*;
+import com.healthcare.sample.domain.Task;
+import com.healthcare.sample.domain.TaskRepository;
+import com.healthcare.sample.domain.TaskStatus;
+import com.healthcare.sample.dtos.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Api(value = "tasks", description = "Manage scheduled tasks")
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/tasks")
@@ -24,7 +27,8 @@ class TaskController {
         this.taskRepository = taskRepository;
     }
 
-    @RequestMapping("/{id}")
+    @ApiOperation(value = "Get details of an existing task", response = TaskDetailResponse.class)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public TaskDetailResponse detailOf(@PathVariable UUID id) {
         Task task = taskRepository.findOne(id);
 
@@ -36,13 +40,15 @@ class TaskController {
                 task.getDueDate(), task.getPriority());
     }
 
+    @ApiOperation(value = "Delete a task in the database")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         taskRepository.delete(id);
     }
 
-    @RequestMapping
+    @ApiOperation(value = "Get all task currently in the database", response = TaskResponse.class, responseContainer = "List")
+    @RequestMapping(value="/",  method = RequestMethod.GET)
     public Iterable<TaskResponse> list() {
 
         return StreamSupport.stream(taskRepository.findAll().spliterator(), false)
@@ -51,7 +57,8 @@ class TaskController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(value = "Create a new scheduled task", response = TaskDetailResponse.class)
+    @RequestMapping(value="/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDetailResponse create(@Valid @RequestBody AddTaskRequest request) {
         Task task = new Task(request.title, request.description, request.dueAt, request.priority);
@@ -62,6 +69,7 @@ class TaskController {
                 task.getTitle(), task.getDescription(), task.getDueDate(), task.getPriority());
     }
 
+    @ApiOperation(value = "Update an existing task")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@PathVariable UUID id, @Valid @RequestBody UpdateTaskDetailRequest detail) {
@@ -77,6 +85,7 @@ class TaskController {
         taskRepository.save(task);
     }
 
+    @ApiOperation(value = "Delay an existing task")
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void delay(@PathVariable UUID id, @RequestBody TaskChangeStatusRequest request) {

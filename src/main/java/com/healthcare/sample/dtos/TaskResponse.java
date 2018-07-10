@@ -1,7 +1,7 @@
-package com.searchink.sample.dtos;
+package com.healthcare.sample.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.searchink.sample.domain.TaskStatus;
+import com.healthcare.sample.domain.TaskStatus;
 
 import java.util.Date;
 import java.util.UUID;
